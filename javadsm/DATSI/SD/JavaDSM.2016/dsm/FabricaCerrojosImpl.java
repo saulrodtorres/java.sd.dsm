@@ -8,6 +8,8 @@ public class FabricaCerrojosImpl extends UnicastRemoteObject implements FabricaC
     public FabricaCerrojosImpl() throws RemoteException {
     }
     public synchronized	Cerrojo iniciar(String s) throws RemoteException {
+	//habra que rellenar el metodo iniciar con una llamada al constructor.
+	//el constructor tendra que guardar su instancia en algun lado, lo mas tipico es guardarla en MAP 
 	return null;
     }
 }
