@@ -2,14 +2,19 @@ package dsm;
 import java.rmi.*;
 import java.rmi.server.*;
 import java.util.*;
+import java.util.HashMap;
 
 public class FabricaCerrojosImpl extends UnicastRemoteObject implements FabricaCerrojos {
-
+    static Cerrojo instancia = null;
+    
     public FabricaCerrojosImpl() throws RemoteException {
+	if (instancia == null){
+	    instancia = new Cerrojo();
+	}
+	return instancia;
     }
     public synchronized	Cerrojo iniciar(String s) throws RemoteException {
-	//habra que rellenar el metodo iniciar con una llamada al constructor.
-	//el constructor tendra que guardar su instancia en algun lado, lo mas tipico es guardarla en MAP 
+	//no, ya no estoy seguro de si se trata de utilizar la fabrica como intermedio para crear varios tipos de cerrojo o como singleton
 	return null;
     }
 }
