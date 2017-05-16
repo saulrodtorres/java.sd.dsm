@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.HashMap;
 
 public class FabricaCerrojosImpl extends UnicastRemoteObject implements FabricaCerrojos {
+    static Map<String,Cerrojo> contenedorMap = new HashMap<>(); 
     static Cerrojo instancia = null;
     
     public FabricaCerrojosImpl() throws RemoteException {
@@ -14,8 +15,14 @@ public class FabricaCerrojosImpl extends UnicastRemoteObject implements FabricaC
 	return instancia;
     }
     public synchronized	Cerrojo iniciar(String s) throws RemoteException {
-	//no, ya no estoy seguro de si se trata de utilizar la fabrica como intermedio para crear varios tipos de cerrojo o como singleton
-	return null;
+	//creo que quiere que usemos la fabrica como singleton con contenedores
+	   //Cerrojo myreturn = null;
+	if (contenedorMap.contains(s)){
+		return contenedorMap.get()
+	}
+	else{
+		return FabricaCerrojosImpl();
+	}
     }
 }
 
