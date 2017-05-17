@@ -18,10 +18,10 @@ public class FabricaCerrojosImpl extends UnicastRemoteObject implements FabricaC
 	//creo que quiere que usemos la fabrica como singleton con contenedores
 	   //Cerrojo myreturn = null;
 	if (contenedorMap.contains(s)){
-		return contenedorMap.get()
+	    return contenedorMap.get();
 	}
 	else{
-		return FabricaCerrojosImpl();
+	    return FabricaCerrojosImpl();
 	}
     }
 }
