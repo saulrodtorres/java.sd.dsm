@@ -9,7 +9,7 @@ public class AlmacenImpl extends UnicastRemoteObject implements Almacen {
     private Map<String, ObjetoCompartido> contenedor;
     //constructor
     public AlmacenImpl() throws RemoteException {
-	contenedor = new HashMAp<String,ObjetoCompartido>;
+	contenedor = new HashMap<String,ObjetoCompartido>();
     }
 
     //solo se leeran si la version pasada es mayor que la del contenedor del Almacen
@@ -22,9 +22,9 @@ public class AlmacenImpl extends UnicastRemoteObject implements Almacen {
 	    while(i.hasNext()){
 		CabeceraObjetoCompartido coc = i.next();
 		if ( contenedor.containsKey(coc.getNombre()) ){
-		    objetoCompartido oc = contenedor.get(coc.getNombre());
+		    ObjetoCompartido oc = contenedor.get(coc.getNombre());
 		    int versionO = coc.getVersion();
-		    int versionC = oc.getCabecera().getVersion
+		    int versionC = oc.getCabecera().getVersion();
 			if ( versionC > versionO  ){
 			    loc.add(oc);
 			}
@@ -37,9 +37,9 @@ public class AlmacenImpl extends UnicastRemoteObject implements Almacen {
     public synchronized void escribirObjetos(List<ObjetoCompartido> loc)
      throws RemoteException  {
 	Iterator<ObjetoCompartido> i = loc.iterator();
-	while (iterator.hasNext()){
-	    objetoCompartido oc = next();
-	    contenedor.put(oc.getCabecera().getNombre, oc);
+	while (i.hasNext()){
+	    ObjetoCompartido oc = i.next();
+	    contenedor.put(oc.getCabecera().getNombre(), oc);
 	}
 	
     }
