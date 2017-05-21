@@ -1,5 +1,6 @@
 package dsm;
 
+import java.net.MalformedURLException;
 import java.rmi.*;
 import java.rmi.server.*;
 import java.util.*;
@@ -15,7 +16,7 @@ public class DSMCerrojo {
     private Cerrojo  cerrojo;       //el DSM utiliza este cerrojo por debajo.
         
     
-    public DSMCerrojo (String nom) throws RemoteException {
+    public DSMCerrojo (String nom) throws RemoteException, MalformedURLException, NotBoundException {
     	this.nombre = nom;
     	String servidor = System.getenv("SERVIDOR");
     	String puerto = System.getenv("PUERTO");
@@ -30,18 +31,20 @@ public class DSMCerrojo {
     }
 
     public void asociar(ObjetoCompartido o) {
-    	listaDeObjetos.add(o);
+    	loc.add(o);
     }
     public void desasociar(ObjetoCompartido o) {
 	boolean encontrado = false;
 	int i = 0;
+	int sizeOfLoc=loc.size();
 	//o esta en loc?
 	//vamos a buscar por el nombre al objeto que deberia estar en loc=listadeobjetoscompartidos
-	while (i=0; !encontrado && i < loc.size();i++ ){
+	while (!(encontrado) && (i < sizeOfLoc)){
 	    if (o.getCabecera().getNombre().equals( loc.get(i).getCabecera().getNombre() )){
-		loc.remove(j);
-		entontrado=true;
+		loc.remove(i);
+		encontrado=true;
 	    }
+	    i++;
 	}
     }
     public boolean adquirir(boolean exc) throws RemoteException {
@@ -51,7 +54,7 @@ public class DSMCerrojo {
 	List<ObjetoCompartido> loca = new ArrayList<ObjetoCompartido>();//loc actualizado.
 	int i;
 	boolean adquirir=true;
-	for(i= 0; i < this.loc.size()){
+	for(i= 0; i < this.loc.size();i++){
 	    lcoc.add( this.loc.get(i).getCabecera() );	    
 	}
 	if ( lcoc.isEmpty() ){
@@ -62,25 +65,26 @@ public class DSMCerrojo {
 	    loca= almacen.leerObjetos(lcoc); //leerObjetos(): Solo se leeran si la version pasada es mayor que la del contenedor del Almacen
 	}
 	//este while va a dar problemas
-	while(i= 0;!adquirir && loca!=null && i<loca.size();i++){
-	    ObjetoCompartido oc = loca.get(i).getCabecera().getNombre();//loca.get(i)
+	while(!adquirir && loca!=null && i<loca.size()){
+	    ObjetoCompartido oc = loca.get(i);//loca.get(i)
 	    if (oc==null){
 		adquirir = false;
 	    }
 	    else{
-		if ( oc.setObjecto( loca.get(i).getObjeto() ){
-			oc.setVersion( loca.get(i).getCabecera().getVersion() );//otra vez loca.get(i)
-		    }
+	    	if ( oc.setObjeto( loca.get(i).getObjeto() ) ){
+	    		oc.setVersion( loca.get(i).getCabecera().getVersion() );//otra vez loca.get(i)
+	    	}
 	        else{
 			adquirir = false;
 		    }
 	    }
-	    
-	}//supuesto while
+	    i++;
+	}//while
 	return adquirir;
     }
     
     public boolean liberar() throws RemoteException {
+    	//este liberar esta muy verde y hay que pensarlo
 	return this.cerrojo.liberar();
    }
 }
