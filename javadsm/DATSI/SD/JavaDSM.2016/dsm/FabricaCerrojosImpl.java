@@ -4,13 +4,13 @@ import java.rmi.server.*;
 import java.util.*;
 
 public class FabricaCerrojosImpl extends UnicastRemoteObject implements FabricaCerrojos {
-    protected FabricaCerrojosImpl() throws RemoteException {
-		super();
-		getInstance();
-    }
 	static Map<String,Cerrojo> contenedorMap = new HashMap<>(); 
-    static Cerrojo instancia = null;
+	static Cerrojo instancia = null;
     
+	protected FabricaCerrojosImpl() throws RemoteException {
+		super();
+		this.instancia = getInstance();
+    	}    
     public static Cerrojo getInstance() throws RemoteException {
 	if (instancia == null){
 	    instancia = new CerrojoImpl();
