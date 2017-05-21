@@ -32,7 +32,7 @@ class CerrojoImpl extends UnicastRemoteObject implements Cerrojo {
 		    noreason = false;		  
 		}
 	    }//try
-	    catch(InterruptedExcepction e){
+	    catch(InterruptedException e){
 		e.printStackTrace();
 	    }
 	}//while
@@ -40,7 +40,7 @@ class CerrojoImpl extends UnicastRemoteObject implements Cerrojo {
 	
     public synchronized boolean liberar() throws RemoteException {
 	boolean resultado = true;
-	if (numeroEsritores == 0 && numeroLectores == 0){
+	if (numeroEscritores == 0 && numeroLectores == 0){
 	    //no hay nada que liberar
 	    resultado = false;	   
 	}
